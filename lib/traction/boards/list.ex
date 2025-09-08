@@ -9,6 +9,7 @@ defmodule Traction.Boards.List do
     field :position, :integer
 
     belongs_to :board, Traction.Boards.Board
+    has_many :cards, Traction.Boards.Card
 
     timestamps(type: :utc_datetime)
   end

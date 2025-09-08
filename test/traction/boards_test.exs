@@ -122,7 +122,7 @@ defmodule Traction.BoardsTest do
 
     import Traction.BoardsFixtures
 
-    @invalid_attrs %{position: nil, description: nil, title: nil}
+    @invalid_attrs %{position: nil, description: nil, title: nil, list_id: nil}
 
     test "list_cards/0 returns all cards" do
       card = card_fixture()
@@ -135,12 +135,20 @@ defmodule Traction.BoardsTest do
     end
 
     test "create_card/1 with valid data creates a card" do
-      valid_attrs = %{position: 42, description: "some description", title: "some title"}
+      list = list_fixture()
+
+      valid_attrs = %{
+        position: 42,
+        description: "some description",
+        title: "some title",
+        list_id: list.id
+      }
 
       assert {:ok, %Card{} = card} = Boards.create_card(valid_attrs)
       assert card.position == 42
       assert card.description == "some description"
       assert card.title == "some title"
+      assert card.list_id == list.id
     end
 
     test "create_card/1 with invalid data returns error changeset" do
