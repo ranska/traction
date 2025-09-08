@@ -76,16 +76,9 @@ defmodule TractionWeb.BoardLive do
               phx-drop="drop"
               phx-value-list_id={list.id}
               phx-dragover="dragover"
-              phx-value-list_id={list.id}
               phx-dragleave="dragleave"
             >
-              <div class={[
-                "rounded-lg p-4 transition-colors",
-                if(@dragover_list == list.id,
-                  do: "bg-blue-200 border-2 border-blue-400",
-                  else: "bg-gray-200"
-                )
-              ]}>
+              <div class="rounded-lg p-4 transition-colors bg-gray-200">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">
                   {list.title}
                 </h3>
