@@ -8,6 +8,8 @@ defmodule Traction.Boards.Board do
     field :title, :string
     field :description, :string
 
+    has_many :lists, Traction.Boards.List
+
     timestamps(type: :utc_datetime)
   end
 

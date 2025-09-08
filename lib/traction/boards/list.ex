@@ -7,7 +7,8 @@ defmodule Traction.Boards.List do
   schema "lists" do
     field :title, :string
     field :position, :integer
-    field :board_id, :binary_id
+
+    belongs_to :board, Traction.Boards.Board
 
     timestamps(type: :utc_datetime)
   end
@@ -15,7 +16,7 @@ defmodule Traction.Boards.List do
   @doc false
   def changeset(list, attrs) do
     list
-    |> cast(attrs, [:title, :position])
-    |> validate_required([:title, :position])
+    |> cast(attrs, [:title, :position, :board_id])
+    |> validate_required([:title, :position, :board_id])
   end
 end
