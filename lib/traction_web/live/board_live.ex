@@ -7,7 +7,7 @@ defmodule TractionWeb.BoardLive do
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     board = Boards.get_board!(id) |> Repo.preload(lists: [:cards])
-    {:ok, assign(socket, board: board, dragged_card: nil)}
+    {:ok, assign(socket, board: board, dragged_card: nil, dragover_list: nil)}
   end
 
   @impl true
@@ -20,22 +20,33 @@ defmodule TractionWeb.BoardLive do
     dragged_card_id = socket.assigns.dragged_card
 
     if dragged_card_id do
-      # Get the card and update its list_id
-      card = Boards.get_card!(dragged_card_id)
-      {:ok, _updated_card} = Boards.update_card(card, %{list_id: list_id})
+      try do
+        # Get the card and update its list_id
+        card = Boards.get_card!(dragged_card_id)
+        {:ok, _updated_card} = Boards.update_card(card, %{list_id: list_id})
 
-      # Re-fetch board data
-      board = Boards.get_board!(socket.assigns.board.id) |> Repo.preload(lists: [:cards])
+        # Re-fetch board data
+        board = Boards.get_board!(socket.assigns.board.id) |> Repo.preload(lists: [:cards])
 
-      {:noreply, assign(socket, board: board, dragged_card: nil)}
+        {:noreply, assign(socket, board: board, dragged_card: nil, dragover_list: nil)}
+      rescue
+        e ->
+          IO.inspect(e, label: "Drop error")
+          {:noreply, assign(socket, dragged_card: nil, dragover_list: nil)}
+      end
     else
-      {:noreply, socket}
+      {:noreply, assign(socket, dragover_list: nil)}
     end
   end
 
   @impl true
-  def handle_event("dragover", _params, socket) do
-    {:noreply, socket}
+  def handle_event("dragover", %{"list_id" => list_id}, socket) do
+    {:noreply, assign(socket, dragover_list: list_id)}
+  end
+
+  @impl true
+  def handle_event("dragleave", _params, socket) do
+    {:noreply, assign(socket, dragover_list: nil)}
   end
 
   @impl true
@@ -65,8 +76,16 @@ defmodule TractionWeb.BoardLive do
               phx-drop="drop"
               phx-value-list_id={list.id}
               phx-dragover="dragover"
+              phx-value-list_id={list.id}
+              phx-dragleave="dragleave"
             >
-              <div class="bg-gray-200 rounded-lg p-4">
+              <div class={[
+                "rounded-lg p-4 transition-colors",
+                if(@dragover_list == list.id,
+                  do: "bg-blue-200 border-2 border-blue-400",
+                  else: "bg-gray-200"
+                )
+              ]}>
                 <h3 class="text-lg font-medium text-gray-900 mb-4">
                   {list.title}
                 </h3>
