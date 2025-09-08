@@ -8,7 +8,8 @@ defmodule Traction.Boards.Card do
     field :title, :string
     field :description, :string
     field :position, :integer
-    field :list_id, :binary_id
+
+    belongs_to :list, Traction.Boards.List
 
     timestamps(type: :utc_datetime)
   end
@@ -16,7 +17,7 @@ defmodule Traction.Boards.Card do
   @doc false
   def changeset(card, attrs) do
     card
-    |> cast(attrs, [:title, :description, :position])
-    |> validate_required([:title, :description, :position])
+    |> cast(attrs, [:title, :description, :position, :list_id])
+    |> validate_required([:title, :description, :position, :list_id])
   end
 end

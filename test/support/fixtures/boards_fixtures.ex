@@ -41,12 +41,15 @@ defmodule Traction.BoardsFixtures do
   Generate a card.
   """
   def card_fixture(attrs \\ %{}) do
+    list = list_fixture()
+
     {:ok, card} =
       attrs
       |> Enum.into(%{
         description: "some description",
         position: 42,
-        title: "some title"
+        title: "some title",
+        list_id: list.id
       })
       |> Traction.Boards.create_card()
 
