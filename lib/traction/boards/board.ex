@@ -7,7 +7,6 @@ defmodule Traction.Boards.Board do
   schema "boards" do
     field :title, :string
     field :description, :string
-    field :user_id, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -15,7 +14,7 @@ defmodule Traction.Boards.Board do
   @doc false
   def changeset(board, attrs) do
     board
-    |> cast(attrs, [:title, :description, :user_id])
-    |> validate_required([:title, :description, :user_id])
+    |> cast(attrs, [:title, :description])
+    |> validate_required([:title, :description])
   end
 end

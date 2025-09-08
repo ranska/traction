@@ -6,7 +6,6 @@ defmodule Traction.Repo.Migrations.CreateBoards do
       add :id, :binary_id, primary_key: true
       add :title, :string
       add :description, :text
-      add :user_id, :string
 
       timestamps(type: :utc_datetime)
     end

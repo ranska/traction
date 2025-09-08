@@ -12,8 +12,7 @@ defmodule Traction.BoardsFixtures do
       attrs
       |> Enum.into(%{
         description: "some description",
-        title: "some title",
-        user_id: "some user_id"
+        title: "some title"
       })
       |> Traction.Boards.create_board()
 

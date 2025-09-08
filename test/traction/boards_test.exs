@@ -8,7 +8,7 @@ defmodule Traction.BoardsTest do
 
     import Traction.BoardsFixtures
 
-    @invalid_attrs %{description: nil, title: nil, user_id: nil}
+    @invalid_attrs %{description: nil, title: nil}
 
     test "list_boards/0 returns all boards" do
       board = board_fixture()
@@ -21,12 +21,11 @@ defmodule Traction.BoardsTest do
     end
 
     test "create_board/1 with valid data creates a board" do
-      valid_attrs = %{description: "some description", title: "some title", user_id: "some user_id"}
+      valid_attrs = %{description: "some description", title: "some title"}
 
       assert {:ok, %Board{} = board} = Boards.create_board(valid_attrs)
       assert board.description == "some description"
       assert board.title == "some title"
-      assert board.user_id == "some user_id"
     end
 
     test "create_board/1 with invalid data returns error changeset" do
@@ -35,12 +34,11 @@ defmodule Traction.BoardsTest do
 
     test "update_board/2 with valid data updates the board" do
       board = board_fixture()
-      update_attrs = %{description: "some updated description", title: "some updated title", user_id: "some updated user_id"}
+      update_attrs = %{description: "some updated description", title: "some updated title"}
 
       assert {:ok, %Board{} = board} = Boards.update_board(board, update_attrs)
       assert board.description == "some updated description"
       assert board.title == "some updated title"
-      assert board.user_id == "some updated user_id"
     end
 
     test "update_board/2 with invalid data returns error changeset" do
@@ -149,7 +147,12 @@ defmodule Traction.BoardsTest do
 
     test "update_card/2 with valid data updates the card" do
       card = card_fixture()
-      update_attrs = %{position: 43, description: "some updated description", title: "some updated title"}
+
+      update_attrs = %{
+        position: 43,
+        description: "some updated description",
+        title: "some updated title"
+      }
 
       assert {:ok, %Card{} = card} = Boards.update_card(card, update_attrs)
       assert card.position == 43
