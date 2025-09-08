@@ -7,6 +7,7 @@ This is a Trello-like application designed for learning Elixir and Phoenix. Impo
 - Use `mix precommit` alias when you are done with all changes and fix any pending issues
 - Use the already included and available `:req` (`Req`) library for HTTP requests, **avoid** `:httpoison`, `:tesla`, and `:httpc`. Req is included by default and is the preferred HTTP client for Phoenix apps
 - **CRITICAL: NEVER commit changes unless EXPLICITLY asked by the user.** Always wait for user validation before any `git add` or `git commit`. This is mandatory and non-negotiable.
+- **Be verbose and beginner-friendly in explanations.** When explaining concepts, break them down step-by-step, use simple language, provide examples, and anticipate common questions from beginners learning Elixir/Phoenix.
 
 ### Phoenix v1.8 guidelines
 

@@ -22,14 +22,76 @@ import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
-import {hooks as colocatedHooks} from "phoenix-colocated/traction"
 import topbar from "../vendor/topbar"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks: {...colocatedHooks},
+
+
+  // Dans ton app.js, remplace ton hook par celui-ci
+  hooks: {
+    DragDrop: {
+      mounted() {
+        console.log("🎯 DragDrop hook mounted");
+
+        // Dragstart - quand on commence à drag
+        this.el.addEventListener('dragstart', (e) => {
+          console.log("📦 Dragstart:", e.target.dataset);
+
+          // Récupère l'ID de la carte depuis phx-value-card_id
+          const cardId = e.target.dataset.cardId;
+          if (cardId) {
+            // Stock l'ID pour le transfer
+            e.dataTransfer.setData('text/plain', cardId);
+            e.dataTransfer.effectAllowed = 'move';
+
+            // Envoie à LiveView
+            this.pushEvent("dragstart", { card_id: cardId });
+          }
+        });
+
+        // Dragover - quand on survole une zone de drop
+        this.el.addEventListener('dragover', (e) => {
+          e.preventDefault(); // OBLIGATOIRE pour permettre le drop
+          e.dataTransfer.dropEffect = 'move';
+
+          // Récupère l'ID de la liste depuis phx-value-list_id
+          const listId = e.currentTarget.dataset.listId;
+          if (listId) {
+            console.log("👆 Dragover list:", listId);
+            this.pushEvent("dragover", { list_id: listId });
+          }
+        });
+
+        // Drop - quand on lâche
+        this.el.addEventListener('drop', (e) => {
+          e.preventDefault();
+          console.log("🎯 Drop event");
+
+          // Récupère l'ID de la carte depuis le dataTransfer
+          const cardId = e.dataTransfer.getData('text/plain');
+          const listId = e.currentTarget.dataset.listId;
+
+          if (cardId && listId) {
+            console.log(`📥 Dropping card ${cardId} into list ${listId}`);
+            this.pushEvent("drop", {
+              card_id: cardId,
+              list_id: listId
+            });
+          }
+        });
+
+        // Dragleave - quand on quitte une zone de drop
+        this.el.addEventListener('dragleave', (e) => {
+          console.log("👋 Dragleave");
+          this.pushEvent("dragleave", {});
+        });
+      }
+    }
+  }
+
 })
 
 // Show progress bar on live navigation and form submits
