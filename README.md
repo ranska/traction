@@ -16,9 +16,9 @@ Visitez [`localhost:4000`](http://localhost:4000) dans votre navigateur.
 
 ## 📋 Fonctionnalités
 
-- ✅ **Gestion des Boards** : Création et visualisation de tableaux de tâches
+- ✅ **Gestion des Boards** : Visualisation de tableaux de tâches (Création par seed)
 - ✅ **Listes Organisées** : Organisation des tâches en colonnes
-- ✅ **Cartes Interactives** : Création et gestion de cartes de tâches
+- ✅ **Cartes Interactives** : Gestion de cartes de tâches (Création par seed)
 - ✅ **Drag & Drop** : Déplacement intuitif des cartes entre listes
 - ✅ **Interface Moderne** : Design responsive avec Tailwind CSS
 
