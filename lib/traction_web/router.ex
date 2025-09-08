@@ -18,7 +18,7 @@ defmodule TractionWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/boards/:id", BoardController, :show
+    live "/boards/:id", BoardLive
   end
 
   # Other scopes may use custom stacks.
