@@ -23,11 +23,14 @@ defmodule Traction.BoardsFixtures do
   Generate a list.
   """
   def list_fixture(attrs \\ %{}) do
+    board = board_fixture()
+
     {:ok, list} =
       attrs
       |> Enum.into(%{
         position: 42,
-        title: "some title"
+        title: "some title",
+        board_id: board.id
       })
       |> Traction.Boards.create_list()
 
