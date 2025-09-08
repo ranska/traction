@@ -125,18 +125,18 @@ defmodule TractionWeb.BoardLive do
                   {list.title}
                 </h3>
                 <div
+                  id={"list-dropzone-#{list.id}"}
                   class="space-y-3 min-h-[200px]"
-                  phx-drop="drop"
-                  phx-value-list_id={list.id}
-                  phx-dragover="dragover"
-                  phx-dragleave="dragleave"
+                  phx-hook="DragDrop"
+                  data-list-id={list.id}
                 >
                   <%= for card <- list.cards do %>
                     <div
+                      id={"card-#{card.id}"}
                       class="bg-white rounded shadow-sm p-3 hover:shadow-md transition-shadow cursor-move"
                       draggable="true"
-                      phx-dragstart="dragstart"
-                      phx-value-card_id={card.id}
+                      phx-hook="DragDrop"
+                      data-card-id={card.id}
                     >
                       <h4 class="text-sm font-medium text-gray-900">
                         {card.title}
