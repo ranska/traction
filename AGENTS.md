@@ -1,5 +1,7 @@
 This is a web application written using the Phoenix web framework.
 
+This is a Trello-like application designed for learning Elixir and Phoenix. Important: Always run tests with `mix test` to validate changes. Generate features incrementally and explain them pedagogically to aid learning.
+
 ## Project guidelines
 
 - Use `mix precommit` alias when you are done with all changes and fix any pending issues
