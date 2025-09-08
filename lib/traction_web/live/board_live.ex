@@ -78,27 +78,27 @@ defmodule TractionWeb.BoardLive do
     {:noreply, assign(socket, dragover_list: nil)}
   end
 
-  @impl true
-  def handle_event("force_test", _params, socket) do
-    IO.puts("\n" <> String.duplicate("🚀", 20))
-    IO.puts("🎯 FORCE TEST EVENT RECEIVED!")
-    IO.puts("LiveView is working correctly")
-    IO.puts("Socket assigns: #{inspect(Map.keys(socket.assigns))}")
-    IO.puts(String.duplicate("🚀", 20) <> "\n")
-
-    {:noreply, socket}
-  end
+  # @impl true
+  # def handle_event("force_test", _params, socket) do
+  #   IO.puts("\n" <> String.duplicate("🚀", 20))
+  #   IO.puts("🎯 FORCE TEST EVENT RECEIVED!")
+  #   IO.puts("LiveView is working correctly")
+  #   IO.puts("Socket assigns: #{inspect(Map.keys(socket.assigns))}")
+  #   IO.puts(String.duplicate("🚀", 20) <> "\n")
+  #
+  #   {:noreply, socket}
+  # end
 
   @impl true
   def render(assigns) do
     ~H"""
-    <!-- Debug button -->
-    <button
+    <%!-- Debug button - Commenté car plus nécessaire après correction du drag & drop --%>
+    <%!-- <button
       phx-click="force_test"
       class="fixed top-4 right-4 z-50 bg-red-500 text-white px-4 py-2 rounded shadow-lg hover:bg-red-600"
     >
       🚀 FORCE TEST
-    </button>
+    </button> --%>
 
     <div class="min-h-screen bg-gray-100">
       <div class="py-6">
